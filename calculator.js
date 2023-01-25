@@ -5,18 +5,40 @@ function initialize() {
   numberButtons.forEach((button) => {
     button.addEventListener(`click`, appendNumber);
   });
+
+  const clearButtons = document.querySelectorAll(`#clear-section button`);
+  clearButtons.forEach((button) => {
+    button.addEventListener(`click`, clearDisplay);
+  });
+}
+
+function getDisplayNode() {
+  return document.querySelector(`#display`);
 }
 
 function appendNumber(e) {
   const display = getDisplayNode();
   // If the display reads 0, replace display instead of appending
   display.textContent === `0`
-    ? display.textContent = e.target.textContent
-    : display.textContent = display.textContent + e.target.textContent;
+    ? (display.textContent = e.target.textContent)
+    : (display.textContent = display.textContent + e.target.textContent);
 }
 
-function getDisplayNode() {
-  return document.querySelector(`#display`);
+function clearDisplay(e) {
+  const display = getDisplayNode();
+  switch(e.target.textContent) {
+    case `<<`:
+      display.textContent = display.textContent.slice(0, -1);
+      // If backspace would cause the display to be empty, set to 0 instead
+      if (!display.textContent) display.textContent = `0`;
+      break;
+    case `C`:
+      display.textContent = `0`;
+      break;
+    case `AC`:
+      // TODO
+      break;
+  }
 }
 
 function add(a, b) {
