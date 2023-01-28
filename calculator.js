@@ -1,10 +1,5 @@
-// let displayText = getDisplayNode().textContent;
 const display = document.querySelector(`#display`);
 initialize();
-
-// function getDisplayNode() {
-//   return document.querySelector(`#display`);
-// }
 
 function initialize() {
   const numberButtons = document.querySelectorAll(`#number-section .number`);
@@ -19,16 +14,13 @@ function initialize() {
 }
 
 function appendNumber(e) {
-  // const display = getDisplayNode();
   // If the display reads 0, replace display instead of appending
   display.textContent === `0`
     ? (display.textContent = e.target.textContent)
     : (display.textContent += e.target.textContent);
-  // display.textContent = displayText;
 }
 
 function clearDisplay(e) {
-  // const display = getDisplayNode();
   switch (e.target.textContent) {
     case `<<`:
       display.textContent = display.textContent.slice(0, -1);
@@ -42,7 +34,6 @@ function clearDisplay(e) {
       // TODO
       break;
   }
-  // display.textContent = displayText;
 }
 
 function add(a, b) {
