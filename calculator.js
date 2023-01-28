@@ -1,4 +1,6 @@
-let operandStr = `0`;
+let currentOperand = `0`;
+let storedOperand = `0`;
+let operator;
 initialize();
 
 function initialize() {
@@ -11,37 +13,49 @@ function initialize() {
   clearButtons.forEach((button) => {
     button.addEventListener(`click`, clearDisplay);
   });
-}
 
-function appendNumber(e) {
-  // If the display reads 0, replace display instead of appending
-  operandStr === `0`
-    ? (operandStr = e.target.textContent)
-    : (operandStr += e.target.textContent);
-
-  updateDisplay();
+  const operatorButtons = document.querySelectorAll(`#operator-section button`);
+  operatorButtons.forEach((button) => {
+    button.addEventListener(`click`, storeOperand);
+  });
 }
 
 function updateDisplay() {
   const display = document.querySelector(`#display`);
-  display.textContent = operandStr;
+  display.textContent = currentOperand;
+}
+
+function appendNumber(e) {
+  // If the display reads 0, replace display instead of appending
+  currentOperand === `0`
+    ? (currentOperand = e.target.textContent)
+    : (currentOperand += e.target.textContent);
+
+  updateDisplay();
 }
 
 function clearDisplay(e) {
   switch (e.target.textContent) {
     case `<<`:
-      operandStr = operandStr.slice(0, -1);
+      currentOperand = currentOperand.slice(0, -1);
       // If backspace would cause the display to be empty, set to 0 instead
-      if (!operandStr) operandStr = `0`;
+      if (!currentOperand) currentOperand = `0`;
       break;
     case `C`:
-      operandStr = `0`;
+      currentOperand = `0`;
       break;
     case `AC`:
       // TODO
       break;
   }
 
+  updateDisplay();
+}
+
+function storeOperand(e) {
+  operator = e.target.textContent;
+  storedOperand = currentOperand;
+  currentOperand = `0`;
   updateDisplay();
 }
 
