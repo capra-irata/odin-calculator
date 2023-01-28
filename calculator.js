@@ -1,4 +1,4 @@
-const display = document.querySelector(`#display`);
+let operandStr = `0`;
 initialize();
 
 function initialize() {
@@ -15,25 +15,34 @@ function initialize() {
 
 function appendNumber(e) {
   // If the display reads 0, replace display instead of appending
-  display.textContent === `0`
-    ? (display.textContent = e.target.textContent)
-    : (display.textContent += e.target.textContent);
+  operandStr === `0`
+    ? (operandStr = e.target.textContent)
+    : (operandStr += e.target.textContent);
+
+  updateDisplay();
+}
+
+function updateDisplay() {
+  const display = document.querySelector(`#display`);
+  display.textContent = operandStr;
 }
 
 function clearDisplay(e) {
   switch (e.target.textContent) {
     case `<<`:
-      display.textContent = display.textContent.slice(0, -1);
+      operandStr = operandStr.slice(0, -1);
       // If backspace would cause the display to be empty, set to 0 instead
-      if (!display.textContent) display.textContent = `0`;
+      if (!operandStr) operandStr = `0`;
       break;
     case `C`:
-      display.textContent = `0`;
+      operandStr = `0`;
       break;
     case `AC`:
       // TODO
       break;
   }
+
+  updateDisplay();
 }
 
 function add(a, b) {
