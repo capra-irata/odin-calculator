@@ -1,4 +1,10 @@
+// let displayText = getDisplayNode().textContent;
+const display = document.querySelector(`#display`);
 initialize();
+
+// function getDisplayNode() {
+//   return document.querySelector(`#display`);
+// }
 
 function initialize() {
   const numberButtons = document.querySelectorAll(`#number-section .number`);
@@ -12,21 +18,18 @@ function initialize() {
   });
 }
 
-function getDisplayNode() {
-  return document.querySelector(`#display`);
-}
-
 function appendNumber(e) {
-  const display = getDisplayNode();
+  // const display = getDisplayNode();
   // If the display reads 0, replace display instead of appending
   display.textContent === `0`
     ? (display.textContent = e.target.textContent)
-    : (display.textContent = display.textContent + e.target.textContent);
+    : (display.textContent += e.target.textContent);
+  // display.textContent = displayText;
 }
 
 function clearDisplay(e) {
-  const display = getDisplayNode();
-  switch(e.target.textContent) {
+  // const display = getDisplayNode();
+  switch (e.target.textContent) {
     case `<<`:
       display.textContent = display.textContent.slice(0, -1);
       // If backspace would cause the display to be empty, set to 0 instead
@@ -39,6 +42,7 @@ function clearDisplay(e) {
       // TODO
       break;
   }
+  // display.textContent = displayText;
 }
 
 function add(a, b) {
