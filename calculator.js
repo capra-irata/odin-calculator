@@ -25,7 +25,7 @@ function initialize() {
   const equalsButton = document.querySelector(`#equals`);
   equalsButton.addEventListener(`click`, () => {
     if (!operator) return;
-    storedOperand = operate(storedOperand, currentOperand, operator);
+    storedOperand = operate();
     updateDisplay(storedOperand);
   });
 }
@@ -89,20 +89,20 @@ function divide(a, b) {
   return b === 0 ? `ERR: div by 0` : a / b;
 }
 
-function operate(a, b, operator) {
+function operate() {
   let result;
   switch (operator) {
     case `+`:
-      result = add(+a, +b);
+      result = add(+storedOperand, +currentOperand);
       break;
     case `-`:
-      result = subtract(+a, +b);
+      result = subtract(+storedOperand, +currentOperand);
       break;
     case `*`:
-      result = multiply(+a, +b);
+      result = multiply(+storedOperand, +currentOperand);
       break;
     case `/`:
-      result = divide(+a, +b);
+      result = divide(+storedOperand, +currentOperand);
       break;
   }
 
