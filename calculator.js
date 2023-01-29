@@ -1,4 +1,4 @@
-let operator,
+let operator = ``,
   operatorSelected = false,
   currentOperand = `0`,
   storedOperand = `0`;
@@ -56,10 +56,15 @@ function clearDisplay(e) {
       if (!currentOperand) currentOperand = `0`;
       break;
     case `C`:
+      // Reset currentOperand but retain operator and storedOperand
       currentOperand = `0`;
       break;
     case `AC`:
-      // TODO
+      // Reset everything to default state
+      operator = ``;
+      operatorSelected = false;
+      currentOperand = `0`;
+      storedOperand = `0`;
       break;
   }
 
