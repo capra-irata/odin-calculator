@@ -1,6 +1,6 @@
 let currentOperand = `0`;
 let storedOperand = `0`;
-let operator;
+let operator, operatorSelected = false;
 initialize();
 
 function initialize() {
@@ -14,24 +14,31 @@ function initialize() {
     button.addEventListener(`click`, clearDisplay);
   });
 
-  const operatorButtons = document.querySelectorAll(`#operator-section button`);
+  const operatorButtons = document.querySelectorAll(`#operator-section .operator`);
   operatorButtons.forEach((button) => {
     button.addEventListener(`click`, storeOperand);
   });
+
+  const equalsButton = document.querySelector(`#equals`);
+  equalsButton.addEventListener(`click`, evaluate);
 }
 
-function updateDisplay() {
+function updateDisplay(newDisplay) {
   const display = document.querySelector(`#display`);
-  display.textContent = currentOperand;
+  display.textContent = newDisplay;
 }
 
 function appendNumber(e) {
-  // If the display reads 0, replace display instead of appending
-  currentOperand === `0`
-    ? (currentOperand = e.target.textContent)
-    : (currentOperand += e.target.textContent);
+  // If the display reads 0 or an operator was recently pressed,
+  // replace display instead of appending
+  if (operatorSelected || currentOperand === `0`) {
+    currentOperand = e.target.textContent;
+    operatorSelected = false;
+  } else {
+    currentOperand += e.target.textContent;
+  }
 
-  updateDisplay();
+  updateDisplay(currentOperand);
 }
 
 function clearDisplay(e) {
@@ -49,14 +56,20 @@ function clearDisplay(e) {
       break;
   }
 
-  updateDisplay();
+  updateDisplay(currentOperand);
 }
 
 function storeOperand(e) {
+  operatorSelected = true;
   operator = e.target.textContent;
-  storedOperand = currentOperand;
-  currentOperand = `0`;
-  updateDisplay();
+  const display = document.querySelector(`#display`);
+  storedOperand = display.textContent;
+}
+
+function evaluate(e) {
+  if (!operator) return;
+  storedOperand = operate(storedOperand, currentOperand, operator);
+  updateDisplay(storedOperand);
 }
 
 function add(a, b) {
@@ -76,14 +89,21 @@ function divide(a, b) {
 }
 
 function operate(a, b, operator) {
+  let result;
   switch (operator) {
     case `+`:
-      return add(a, b);
+      result = add(+a, +b);
+      break;
     case `-`:
-      return subtract(a, b);
+      result = subtract(+a, +b);
+      break;
     case `*`:
-      return multiply(a, b);
+      result = multiply(+a, +b);
+      break;
     case `/`:
-      return divide(a, b);
+      result = divide(+a, +b);
+      break;
   }
+
+  return result.toString();
 }
