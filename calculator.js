@@ -1,7 +1,7 @@
 let operator = ``,
   operatorSelected = false,
-  currentOperand = `0`,
-  storedOperand = `0`;
+  currentOperand = ``,
+  storedOperand = ``;
 initialize();
 
 function initialize() {
@@ -26,6 +26,7 @@ function initialize() {
   equalsButton.addEventListener(`click`, () => {
     if (!operator) return;
     storedOperand = operate(); // Operate on current operands and store
+    currentOperand = ``;
     updateDisplay(storedOperand);
   });
 }
@@ -38,7 +39,7 @@ function updateDisplay(newDisplay) {
 function appendNumber(e) {
   // If the display reads 0 or an operator was recently pressed,
   // replace display instead of appending
-  if (operatorSelected || currentOperand === `0`) {
+  if (operatorSelected || !currentOperand) {
     currentOperand = e.target.textContent;
     operatorSelected = false;
   } else {
@@ -52,30 +53,35 @@ function clearDisplay(e) {
   switch (e.target.textContent) {
     case `<<`:
       currentOperand = currentOperand.slice(0, -1);
-      // If backspace would cause the display to be empty, set to 0 instead
-      if (!currentOperand) currentOperand = `0`;
       break;
     case `C`:
       // Reset currentOperand but retain operator and storedOperand
-      currentOperand = `0`;
+      currentOperand = ``;
       break;
     case `AC`:
       // Reset everything to default state
       operator = ``;
       operatorSelected = false;
-      currentOperand = `0`;
-      storedOperand = `0`;
+      currentOperand = ``;
+      storedOperand = ``;
       break;
   }
 
-  updateDisplay(currentOperand);
+  // If display would be empty, set to 0 instead
+  updateDisplay(currentOperand || `0`);
 }
 
 function storeOperand(e) {
-  operatorSelected = true; // Helps appendNumber() with handling display properly
+  if (!storedOperand) {
+    // Prepare for first operation
+    storedOperand = currentOperand;
+  } else {
+    // Otherwise, handle chained operations
+    storedOperand = operate();
+    updateDisplay(storedOperand);
+  }
   operator = e.target.textContent;
-  const display = document.querySelector(`#display`);
-  storedOperand = display.textContent;
+  operatorSelected = true; // Helps appendNumber() with handling display properly
 }
 
 function add(a, b) {
