@@ -1,0 +1,41 @@
+@font-face {
+  font-family: "Chivo Mono";
+  font-weight: 300;
+  src: url("./fonts/ChivoMono-VariableFont_wght.ttf");
+}
+
+/* Temporary solution to center calculator on page */
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#calculator {
+  width: 400px;
+  height: 500px;
+  border: 2px solid black;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+}
+
+#display {
+  border: 1px dotted black;
+  flex: 1;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+#display .text {
+  font-family: "Chivo Mono", ui-monospace;
+  font-size: 48px;
+}
+
+#keypad {
+  border: 1px dotted black;
+  flex: 6; /* 6x the height of the display area */
+}

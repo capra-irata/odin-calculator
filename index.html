@@ -3,13 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <script src="calculator.js" defer></script>
+    <link rel="stylesheet" href="./styles.css" />
     <title>Calculator</title>
   </head>
   <body>
     <div id="calculator">
-      <div id="display">0</div>
+      <div id="display">
+        <div class="text">0</div>
+      </div>
       <div id="keypad">
-        <div id="left-column">
+        <div class="left-column">
           <div id="clear-section">
             <button>&lt;&lt;</button>
             <button>C</button>
@@ -30,7 +33,7 @@
             <button>+/-</button>
           </div>
         </div>
-        <div id="right-column">
+        <div class="right-column">
           <div id="operator-section">
             <button class="operator">+</button>
             <button class="operator">-</button>

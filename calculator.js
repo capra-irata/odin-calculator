@@ -31,9 +31,9 @@ function initialize() {
   });
 }
 
-function updateDisplay(newDisplay) {
-  const display = document.querySelector(`#display`);
-  display.textContent = newDisplay;
+function updateDisplay(newDisplayText) {
+  const displayText = document.querySelector(`#display .text`);
+  displayText.textContent = newDisplayText;
 }
 
 function appendNumber(e) {
