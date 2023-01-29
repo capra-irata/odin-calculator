@@ -25,7 +25,7 @@ function initialize() {
   const equalsButton = document.querySelector(`#equals`);
   equalsButton.addEventListener(`click`, () => {
     if (!operator) return;
-    storedOperand = operate();
+    storedOperand = operate(); // Operate on current operands and store
     updateDisplay(storedOperand);
   });
 }
@@ -67,7 +67,7 @@ function clearDisplay(e) {
 }
 
 function storeOperand(e) {
-  operatorSelected = true;
+  operatorSelected = true; // Helps appendNumber() with handling display properly
   operator = e.target.textContent;
   const display = document.querySelector(`#display`);
   storedOperand = display.textContent;
@@ -92,6 +92,7 @@ function divide(a, b) {
 function operate() {
   let result;
   switch (operator) {
+    // Convert operands to numbers for arithmetic
     case `+`:
       result = add(+storedOperand, +currentOperand);
       break;
