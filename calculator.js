@@ -8,7 +8,7 @@ function initialize() {
   numberButtons.forEach((button) => {
     button.addEventListener(`click`, appendNumber);
   });
-
+  
   const clearButtons = document.querySelectorAll(`#clear-section button`);
   clearButtons.forEach((button) => {
     button.addEventListener(`click`, clearDisplay);
@@ -18,9 +18,13 @@ function initialize() {
   operatorButtons.forEach((button) => {
     button.addEventListener(`click`, storeOperand);
   });
-
+  
   const equalsButton = document.querySelector(`#equals`);
-  equalsButton.addEventListener(`click`, evaluate);
+  equalsButton.addEventListener(`click`, () => {
+    if (!operator) return;
+    storedOperand = operate(storedOperand, currentOperand, operator);
+    updateDisplay(storedOperand);
+  });
 }
 
 function updateDisplay(newDisplay) {
@@ -64,12 +68,6 @@ function storeOperand(e) {
   operator = e.target.textContent;
   const display = document.querySelector(`#display`);
   storedOperand = display.textContent;
-}
-
-function evaluate(e) {
-  if (!operator) return;
-  storedOperand = operate(storedOperand, currentOperand, operator);
-  updateDisplay(storedOperand);
 }
 
 function add(a, b) {
