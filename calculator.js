@@ -1,6 +1,7 @@
-let currentOperand = `0`;
-let storedOperand = `0`;
-let operator, operatorSelected = false;
+let operator,
+  operatorSelected = false,
+  currentOperand = `0`,
+  storedOperand = `0`;
 initialize();
 
 function initialize() {
@@ -8,17 +9,19 @@ function initialize() {
   numberButtons.forEach((button) => {
     button.addEventListener(`click`, appendNumber);
   });
-  
+
   const clearButtons = document.querySelectorAll(`#clear-section button`);
   clearButtons.forEach((button) => {
     button.addEventListener(`click`, clearDisplay);
   });
 
-  const operatorButtons = document.querySelectorAll(`#operator-section .operator`);
+  const operatorButtons = document.querySelectorAll(
+    `#operator-section .operator`
+  );
   operatorButtons.forEach((button) => {
     button.addEventListener(`click`, storeOperand);
   });
-  
+
   const equalsButton = document.querySelector(`#equals`);
   equalsButton.addEventListener(`click`, () => {
     if (!operator) return;
