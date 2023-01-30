@@ -5,6 +5,8 @@ let operator = ``,
 initialize();
 
 function initialize() {
+  document.addEventListener(`onkeydown`, handleKeypress);
+
   const numberButtons = document.querySelectorAll(`.number`);
   numberButtons.forEach((button) => {
     button.addEventListener(`click`, appendNumber);
@@ -27,6 +29,40 @@ function initialize() {
     currentOperand = ``;
     updateDisplay(storedOperand);
   });
+}
+
+// Tie numpad key presses to their respective buttons
+function handleKeypress(e) {
+  switch (e.which) {
+    // Backspace
+    case 8:
+      break;
+    // Numbers
+    case 48:
+    case 49:
+    case 50:
+    case 51:
+    case 52:
+    case 53:
+    case 54:
+    case 55:
+    case 56:
+    case 57:
+      break;
+    // Operators
+    case 42:
+    case 43:
+    case 45:
+    case 47:
+      break;
+    // Enter or equals
+    case 13:
+    case 61:
+      break;
+    // Decimal
+    case 46:
+      break;
+  }
 }
 
 function updateDisplay(newDisplayText) {
