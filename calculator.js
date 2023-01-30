@@ -5,19 +5,17 @@ let operator = ``,
 initialize();
 
 function initialize() {
-  const numberButtons = document.querySelectorAll(`#number-section .number`);
+  const numberButtons = document.querySelectorAll(`.number`);
   numberButtons.forEach((button) => {
     button.addEventListener(`click`, appendNumber);
   });
 
-  const clearButtons = document.querySelectorAll(`#clear-section button`);
+  const clearButtons = document.querySelectorAll(`.clear`);
   clearButtons.forEach((button) => {
     button.addEventListener(`click`, clearDisplay);
   });
 
-  const operatorButtons = document.querySelectorAll(
-    `#operator-section .operator`
-  );
+  const operatorButtons = document.querySelectorAll(`.operator`);
   operatorButtons.forEach((button) => {
     button.addEventListener(`click`, storeOperand);
   });
@@ -32,7 +30,7 @@ function initialize() {
 }
 
 function updateDisplay(newDisplayText) {
-  const displayText = document.querySelector(`#display .text`);
+  const displayText = document.querySelector(`#display div`);
   displayText.textContent = newDisplayText;
 }
 

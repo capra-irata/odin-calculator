@@ -9,38 +9,38 @@
   <body>
     <div id="calculator">
       <div id="display">
-        <div class="text">0</div>
+        <div>0</div>
       </div>
       <div id="keypad">
-        <div class="left-column">
-          <div id="clear-section">
-            <button>&lt;&lt;</button>
-            <button>C</button>
-            <button>AC</button>
-          </div>
-          <div id="number-section">
-            <button class="number">7</button>
-            <button class="number">8</button>
-            <button class="number">9</button>
-            <button class="number">4</button>
-            <button class="number">5</button>
-            <button class="number">6</button>
-            <button class="number">1</button>
-            <button class="number">2</button>
-            <button class="number">3</button>
-            <button class="number">0</button>
-            <button>.</button>
-            <button>+/-</button>
-          </div>
+        <div>
+          <button class="clear">AC</button>
+          <button class="clear">C</button>
+          <button class="clear">&lt;&lt;</button>
+          <button class="operator operator-column">/</button>
         </div>
-        <div class="right-column">
-          <div id="operator-section">
-            <button class="operator">+</button>
-            <button class="operator">-</button>
-            <button class="operator">*</button>
-            <button class="operator">/</button>
-            <button id="equals">=</button>
-          </div>
+        <div>
+          <button class="number">7</button>
+          <button class="number">8</button>
+          <button class="number">9</button>
+          <button class="operator operator-column">*</button>
+        </div>
+        <div>
+          <button class="number">4</button>
+          <button class="number">5</button>
+          <button class="number">6</button>
+          <button class="operator operator-column">-</button>
+        </div>
+        <div>
+          <button class="number">1</button>
+          <button class="number">2</button>
+          <button class="number">3</button>
+          <button class="operator operator-column">+</button>
+        </div>
+        <div>
+          <button class="number">0</button>
+          <button>+/-</button>
+          <button>.</button>
+          <button class="operator-column" id="equals">=</button>
         </div>
       </div>
     </div>
