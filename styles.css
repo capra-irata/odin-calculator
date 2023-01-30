@@ -8,6 +8,7 @@
 body {
   width: 100vw;
   height: 100vh;
+  background-color: rgb(18, 18, 18);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,42 +18,78 @@ body {
 #calculator {
   width: 300px;
   height: 400px;
-  border: 2px solid black;
+  border-width: 4px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.05);
   flex: none; /* Don't squish calculator if window is too small */
   display: flex;
   flex-direction: column;
 }
 
 #display {
-  border: 1px dotted black;
+  border-width: 0px 0px 4px 0px;
   flex: 1; /* 1/8x the height of #keypad area */
   display: flex;
   justify-content: right;
   align-items: center;
 }
 
+#calculator, #display {
+  border-color: rgb(255, 255, 255, 0.2);
+  border-style: solid;
+}
+
 /* Display text */
 #display div {
   font-family: "Chivo Mono", ui-monospace;
   font-size: 48px;
+  color: white;
 }
 
 #keypad {
-  margin: 4px;
+  padding: 4px;
   flex: 8; /* 8x the height of #display area */
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  gap: 4px;
+  gap: 3px;
 }
 
 #keypad div {
   flex: 1;
   display: flex;
   justify-content: space-evenly;
-  gap: 4px;
+  gap: 3px;
 }
 
 button {
-  width: 100%;
+  width: 100%; /* Otherwise buttons will not fill the horizontal space */
+  border: 3px outset;
+  border-radius: 4px 4px;
+  cursor: pointer;
+}
+
+.clear {
+  background-color: rgb(228, 183, 183);
+  border-color:rgb(198, 153, 153);
+}
+
+.operator {
+  background-color: rgb(183, 228, 183);
+  border-color: rgb(153, 198, 153);
+}
+
+.number {
+  background-color: rgb(183, 183, 183);
+  border-color: rgb(153, 153, 153);
+}
+
+.modifier {
+  background-color: rgb(203, 203, 203);
+  border-color: rgb(173, 173, 173);
+}
+
+#equals {
+  background-color: rgb(143, 188, 143);;
+  border-color: rgb(113, 158, 113);
 }
