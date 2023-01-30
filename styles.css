@@ -50,6 +50,12 @@ body {
   font-family: "Chivo Mono", ui-monospace;
   font-size: 48px;
   color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: rtl;
+  white-space: nowrap; /* Requirement of text-overflow */
+  /* overflow-x: scroll; */
+  user-select: all;
 }
 
 #keypad {
