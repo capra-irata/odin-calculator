@@ -14,14 +14,14 @@ body {
   align-items: center;
 }
 
-#calculator,
-#display-area {
+.calculator,
+.display-area {
   border-color: rgb(255, 255, 255, 0.2);
   border-style: solid;
 }
 
-/* Contains #display-area and #keypad-area */
-#calculator {
+/* Contains .display-area and .keypad-area */
+.calculator {
   height: 400px;
   width: 300px;
   border-radius: 4px;
@@ -32,39 +32,40 @@ body {
   flex-direction: column;
 }
 
-#display-area,
-#keypad-area {
+.display-area,
+.keypad-area {
   padding: 4px;
 }
 
-#display-area {
+.display-area {
   border-width: 0px 0px 4px 0px;
   font-family: "Chivo Mono", ui-monospace;
   text-align: right;
   color: white;
-  flex: 1; /* 1/8x the height of #keypad-area */
+  flex: 1; /* 1/8x the height of .keypad-area */
 }
 
-/* Display text */
-#display {
+.display-text {
+  height: 60px;
+  line-height: 60px; /* Center the text within the display-area */
   font-size: 48px;
-  /* overflow: hidden;
-  text-overflow: ellipsis;
-  direction: rtl;
-  white-space: nowrap; Requirement of text-overflow */
-  /* overflow-x: scroll; */
   user-select: all;
 }
 
-#keypad-area {
-  flex: 8; /* 8x the height of #display-area */
+/* Class added to .display-text when text overflows */
+.shrink-to-fit {
+  font-size: 32px
+}
+
+.keypad-area {
+  flex: 8; /* 8x the height of .display-area */
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   gap: 3px;
 }
 
-#keypad-area div {
+.keypad-area div {
   flex: 1;
   display: flex;
   justify-content: space-evenly;
@@ -100,7 +101,7 @@ button {
   border-color: rgb(193, 193, 193);
 }
 
-#equals {
+.equals {
   background-color: rgb(143, 188, 143);
   border-color: rgb(113, 158, 113);
 }

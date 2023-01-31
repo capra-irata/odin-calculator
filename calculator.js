@@ -22,7 +22,7 @@ function initialize() {
     button.addEventListener(`click`, handleOperator);
   });
 
-  document.querySelector(`#equals`).addEventListener(`click`, handleEquals);
+  document.querySelector(`.equals`).addEventListener(`click`, handleEquals);
 }
 
 // Tie numpad key presses to their respective buttons
@@ -59,9 +59,21 @@ function getKeypress(e) {
   }
 }
 
-function updateDisplay(newDisplayText) {
-  const displayText = document.querySelector(`#display`);
-  displayText.textContent = newDisplayText;
+function updateDisplay(str) {
+  const display = document.querySelector(`.display-text`);
+
+  if (str.length > 10) {
+    // If the display would overflow, convert to scientific notation and shrink font size
+    str = parseFloat(str).toExponential(6);
+    !display.classList.contains(`shrink-to-fit`) &&
+      display.classList.add(`shrink-to-fit`);
+  } else {
+    // If the str can fit display and font size is currently shrunk, undo shrink
+    display.classList.contains(`shrink-to-fit`) &&
+      display.classList.remove(`shrink-to-fit`);
+  }
+
+  display.textContent = str;
 }
 
 function handleNumber(e) {
