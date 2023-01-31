@@ -22,16 +22,7 @@ function initialize() {
     button.addEventListener(`click`, handleOperator);
   });
 
-  const equalsButton = document.querySelector(`#equals`);
-  equalsButton.addEventListener(`click`, () => {
-    if (operator) {
-      operandB = operate(); // Operate on current operands and store result
-      operator = ``; // Necessary to properly handle subsequent operations
-      updateDisplay(operandB);
-    }
-
-    flagClear = true;
-  });
+  document.querySelector(`#equals`).addEventListener(`click`, handleEquals);
 }
 
 // Tie numpad key presses to their respective buttons
@@ -120,6 +111,16 @@ function handleOperator(e) {
   operator = e.target.textContent;
 }
 
+function handleEquals() {
+  if (operator) {
+    operandB = operate(); // Operate on current operands and store result
+    operator = ``; // Necessary to properly handle subsequent operations
+    updateDisplay(operandB);
+  }
+
+  flagClear = true;
+}
+
 function operate() {
   switch (operator) {
     // Convert operands to numbers for arithmetic, convert result to string before return
@@ -147,5 +148,5 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  return b === 0 ? `ERR: div by 0` : a / b;
+  return b === 0 ? `UNDEFINED` : a / b;
 }
