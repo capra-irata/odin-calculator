@@ -1,15 +1,15 @@
 let operator = ``,
-  operatorSelected = false,
-  currentOperand = ``,
-  storedOperand = ``;
+  operandA = ``,
+  operandB = `0`,
+  clearFlag = true; // When true, clear the display on next number pressed
 initialize();
 
 function initialize() {
-  document.addEventListener(`onkeydown`, handleKeypress);
+  document.addEventListener(`onkeydown`, getKeypress);
 
   const numberButtons = document.querySelectorAll(`.number`);
   numberButtons.forEach((button) => {
-    button.addEventListener(`click`, appendNumber);
+    button.addEventListener(`click`, handleNumber);
   });
 
   const clearButtons = document.querySelectorAll(`.clear`);
@@ -25,14 +25,14 @@ function initialize() {
   const equalsButton = document.querySelector(`#equals`);
   equalsButton.addEventListener(`click`, () => {
     if (!operator) return;
-    storedOperand = operate(); // Operate on current operands and store
-    currentOperand = ``;
-    updateDisplay(storedOperand);
+    operandB = operate(); // Operate on current operands and store
+    operandA = ``;
+    updateDisplay(operandB);
   });
 }
 
 // Tie numpad key presses to their respective buttons
-function handleKeypress(e) {
+function getKeypress(e) {
   switch (e.which) {
     // Backspace
     case 8:
@@ -70,52 +70,73 @@ function updateDisplay(newDisplayText) {
   displayText.textContent = newDisplayText;
 }
 
-function appendNumber(e) {
+function handleNumber(e) {
   // If the display reads 0 or an operator was recently pressed,
   // replace display instead of appending
-  if (operatorSelected || !currentOperand) {
-    currentOperand = e.target.textContent;
-    operatorSelected = false;
+  if (clearFlag || !operandA) {
+    operandA = e.target.textContent;
+    clearFlag = false;
   } else {
-    currentOperand += e.target.textContent;
+    operandA += e.target.textContent;
   }
 
-  updateDisplay(currentOperand);
+  updateDisplay(operandA);
 }
 
 function clearDisplay(e) {
   switch (e.target.textContent) {
     case `<<`:
-      currentOperand = currentOperand.slice(0, -1);
+      operandA = operandA.slice(0, -1);
       break;
     case `C`:
-      // Reset currentOperand but retain operator and storedOperand
-      currentOperand = ``;
+      // Reset operandA but retain operator and operandB
+      operandA = ``;
       break;
     case `AC`:
       // Reset everything to default state
       operator = ``;
-      operatorSelected = false;
-      currentOperand = ``;
-      storedOperand = ``;
+      operandA = ``;
+      operandB = `0`;
+      clearFlag = true;
       break;
   }
 
   // If display would be empty, set to 0 instead
-  updateDisplay(currentOperand || `0`);
+  updateDisplay(operandA || `0`);
 }
 
 function storeOperand(e) {
-  if (!storedOperand) {
+  if (!operandB) {
     // Prepare for first operation
-    storedOperand = currentOperand;
+    operandB = operandA;
   } else {
     // Otherwise, handle chained operations
-    storedOperand = operate();
-    updateDisplay(storedOperand);
+    operandB = operate();
+    updateDisplay(operandB);
   }
   operator = e.target.textContent;
-  operatorSelected = true; // Helps appendNumber() with handling display properly
+  clearFlag = true; // Helps handleNumber() with updating display properly
+}
+
+function operate() {
+  let result;
+  switch (operator) {
+    // Convert operands to numbers for arithmetic
+    case `+`:
+      result = add(+operandB, +operandA);
+      break;
+    case `-`:
+      result = subtract(+operandB, +operandA);
+      break;
+    case `*`:
+      result = multiply(+operandB, +operandA);
+      break;
+    case `/`:
+      result = divide(+operandB, +operandA);
+      break;
+  }
+
+  return result.toString();
 }
 
 function add(a, b) {
@@ -132,25 +153,4 @@ function multiply(a, b) {
 
 function divide(a, b) {
   return b === 0 ? `ERR: div by 0` : a / b;
-}
-
-function operate() {
-  let result;
-  switch (operator) {
-    // Convert operands to numbers for arithmetic
-    case `+`:
-      result = add(+storedOperand, +currentOperand);
-      break;
-    case `-`:
-      result = subtract(+storedOperand, +currentOperand);
-      break;
-    case `*`:
-      result = multiply(+storedOperand, +currentOperand);
-      break;
-    case `/`:
-      result = divide(+storedOperand, +currentOperand);
-      break;
-  }
-
-  return result.toString();
 }
