@@ -60,7 +60,7 @@ function getKeypress(e) {
 }
 
 function updateDisplay(newDisplayText) {
-  const displayText = document.querySelector(`#display div`);
+  const displayText = document.querySelector(`#display`);
   displayText.textContent = newDisplayText;
 }
 
