@@ -1,7 +1,7 @@
 let operator = ``,
   operandA = ``,
-  operandB = `0`,
-  clearFlag = true; // When true, clear the display on next number pressed
+  operandB = `0`, // Note that operands are strings until they're operated on
+  flagClear = true; // When true, clear the display on next number pressed
 initialize();
 
 function initialize() {
@@ -14,20 +14,23 @@ function initialize() {
 
   const clearButtons = document.querySelectorAll(`.clear`);
   clearButtons.forEach((button) => {
-    button.addEventListener(`click`, clearDisplay);
+    button.addEventListener(`click`, handleClear);
   });
 
   const operatorButtons = document.querySelectorAll(`.operator`);
   operatorButtons.forEach((button) => {
-    button.addEventListener(`click`, storeOperand);
+    button.addEventListener(`click`, handleOperator);
   });
 
   const equalsButton = document.querySelector(`#equals`);
   equalsButton.addEventListener(`click`, () => {
-    if (!operator) return;
-    operandB = operate(); // Operate on current operands and store
-    operandA = ``;
-    updateDisplay(operandB);
+    if (operator) {
+      operandB = operate(); // Operate on current operands and store result
+      operator = ``; // Necessary to properly handle subsequent operations
+      updateDisplay(operandB);
+    }
+
+    flagClear = true;
   });
 }
 
@@ -71,72 +74,64 @@ function updateDisplay(newDisplayText) {
 }
 
 function handleNumber(e) {
-  // If the display reads 0 or an operator was recently pressed,
-  // replace display instead of appending
-  if (clearFlag || !operandA) {
-    operandA = e.target.textContent;
-    clearFlag = false;
+  // If clear flag is set, replace display instead of appending number
+  if (flagClear) {
+    operandB = e.target.textContent;
+    flagClear = false;
   } else {
-    operandA += e.target.textContent;
+    operandB += e.target.textContent;
   }
 
-  updateDisplay(operandA);
+  updateDisplay(operandB);
 }
 
-function clearDisplay(e) {
+function handleClear(e) {
   switch (e.target.textContent) {
     case `<<`:
-      operandA = operandA.slice(0, -1);
+      // If operandB would be empty after slice, set to 0 instead
+      operandB = operandB.slice(0, -1) || `0`;
       break;
     case `C`:
-      // Reset operandA but retain operator and operandB
-      operandA = ``;
+      // Reset operandB but retain operator and operandA
+      operandB = `0`;
       break;
     case `AC`:
       // Reset everything to default state
       operator = ``;
       operandA = ``;
       operandB = `0`;
-      clearFlag = true;
       break;
   }
 
-  // If display would be empty, set to 0 instead
-  updateDisplay(operandA || `0`);
+  if (operandB === `0`) flagClear = true;
+  updateDisplay(operandB);
 }
 
-function storeOperand(e) {
-  if (!operandB) {
-    // Prepare for first operation
-    operandB = operandA;
+function handleOperator(e) {
+  // If a previous operator was pressed, operate on the stored operands
+  if (operator) {
+    operandA = operate();
+    updateDisplay(operandA);
   } else {
-    // Otherwise, handle chained operations
-    operandB = operate();
-    updateDisplay(operandB);
+    operandA = operandB;
   }
+
+  flagClear = true;
   operator = e.target.textContent;
-  clearFlag = true; // Helps handleNumber() with updating display properly
 }
 
 function operate() {
-  let result;
   switch (operator) {
-    // Convert operands to numbers for arithmetic
+    // Convert operands to numbers for arithmetic, convert result to string before return
     case `+`:
-      result = add(+operandB, +operandA);
-      break;
+      return add(+operandA, +operandB).toString();
     case `-`:
-      result = subtract(+operandB, +operandA);
-      break;
+      return subtract(+operandA, +operandB).toString();
     case `*`:
-      result = multiply(+operandB, +operandA);
-      break;
+      return multiply(+operandA, +operandB).toString();
     case `/`:
-      result = divide(+operandB, +operandA);
-      break;
+      return divide(+operandA, +operandB).toString();
   }
-
-  return result.toString();
 }
 
 function add(a, b) {
