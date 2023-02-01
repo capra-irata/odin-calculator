@@ -54,7 +54,7 @@ body {
 
 /* Class added to .display-text when text overflows */
 .shrink-to-fit {
-  font-size: 32px
+  font-size: 32px;
 }
 
 .keypad-area {
@@ -96,7 +96,8 @@ button {
   border-color: rgb(153, 153, 153);
 }
 
-.modifier {
+.negative,
+.decimal {
   background-color: rgb(223, 223, 223);
   border-color: rgb(193, 193, 193);
 }

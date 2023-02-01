@@ -22,6 +22,7 @@ function initialize() {
     button.addEventListener(`click`, handleOperator);
   });
 
+  document.querySelector(`.decimal`).addEventListener(`click`, handleDecimal);
   document.querySelector(`.equals`).addEventListener(`click`, handleEquals);
 }
 
@@ -121,6 +122,18 @@ function handleOperator(e) {
 
   flagClear = true;
   operator = e.target.textContent;
+}
+
+function handleDecimal() {
+  if (flagClear) {
+    operandB = `0`;
+    flagClear = false;
+  }
+
+  if (!operandB.includes(`.`)) {
+    operandB += `.`;
+    updateDisplay(operandB);
+  }
 }
 
 function handleEquals() {
