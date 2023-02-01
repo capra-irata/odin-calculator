@@ -65,7 +65,7 @@ function updateDisplay(str) {
 
   if (str.length > 10) {
     // If the display would overflow, convert to scientific notation and shrink font size
-    str = parseFloat(str).toExponential(6);
+    str = parseFloat(str).toExponential(8);
     !display.classList.contains(`shrink-to-fit`) &&
       display.classList.add(`shrink-to-fit`);
   } else {
@@ -147,17 +147,30 @@ function handleEquals() {
 }
 
 function operate() {
+  let result;
+
   switch (operator) {
-    // Convert operands to numbers for arithmetic, convert result to string before return
+    // Convert operand strings to numbers for arithmetic
     case `+`:
-      return add(+operandA, +operandB).toString();
+      result = add(+operandA, +operandB);
+      break;
     case `-`:
-      return subtract(+operandA, +operandB).toString();
+      result = subtract(+operandA, +operandB);
+      break;
     case `*`:
-      return multiply(+operandA, +operandB).toString();
+      result = multiply(+operandA, +operandB);
+      break;
     case `/`:
-      return divide(+operandA, +operandB).toString();
+      result = divide(+operandA, +operandB);
+      break;
   }
+
+  // TODO Implement more accurate, reliable solution
+  // Deal with inaccurate binary floating point arithmetic
+  result = result.toFixed(8);
+
+  // Remove trailing zeroes
+  return result.replace(/(\.\d*[1-9])0+$|\.0*$/, "$1");
 }
 
 function add(a, b) {
