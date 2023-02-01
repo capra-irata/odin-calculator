@@ -63,6 +63,7 @@ function getKeypress(e) {
 function updateDisplay(str) {
   const display = document.querySelector(`.display-text`);
 
+  if (str === `NaN`) str = `ERROR`;
   if (str.length > 10) {
     // If the display would overflow, convert to scientific notation and shrink font size
     str = parseFloat(str).toExponential(8);
@@ -92,6 +93,9 @@ function handleNumber(e) {
 function handleClear(e) {
   switch (e.target.textContent) {
     case `<<`:
+      // Handle edge case where display reads ERROR
+      if (isNaN(operandB)) return;
+
       // If operandB would be empty after slice, set to 0 instead
       operandB = operandB.slice(0, -1) || `0`;
       break;
@@ -161,6 +165,7 @@ function operate() {
       result = multiply(+operandA, +operandB);
       break;
     case `/`:
+      if (operandB === `0`) return `ERROR`;
       result = divide(+operandA, +operandB);
       break;
   }
@@ -186,5 +191,5 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  return b === 0 ? `UNDEFINED` : a / b;
+  return a / b;
 }
